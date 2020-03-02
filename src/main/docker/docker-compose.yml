@@ -1,0 +1,10 @@
+version: '2'
+services:
+  postgresql-skoltech:
+    image: postgres:10.4
+    environment:
+      - POSTGRES_DB=skoltech
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5434:5432
