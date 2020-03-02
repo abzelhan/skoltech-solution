@@ -10,11 +10,10 @@ import javax.persistence.*;
 public class Sensor {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
+    @JoinColumn(name = "object_id", nullable = false)
     private Object object;
 
 }

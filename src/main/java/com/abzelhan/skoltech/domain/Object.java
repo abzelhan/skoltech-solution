@@ -11,7 +11,6 @@ import java.util.List;
 public class Object {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY)

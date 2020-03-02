@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories({
         "com.abzelhan.skoltech.repository",
 })
-@EntityScan({"com.revenueengine.domain.*"})
+@EntityScan({"com.abzelhan.skoltech.domain"})
 @Configuration
 @EnableTransactionManagement
 public class DatabaseConfiguration {
