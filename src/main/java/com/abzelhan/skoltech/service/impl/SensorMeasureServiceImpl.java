@@ -42,7 +42,7 @@ public class SensorMeasureServiceImpl implements SensorMeasureService {
 
         SensorMeasure sensorMeasure = mapper.toEntity(dto);
 
-        return mapper.toDto(this.repository.save(sensorMeasure));
+        return mapper.toDto(this.repository.saveAndFlush(sensorMeasure));
     }
 
     @Override

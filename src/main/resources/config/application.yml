@@ -1,6 +1,4 @@
 spring:
-  jooq:
-    sql-dialect: postgres
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5434/skoltech
