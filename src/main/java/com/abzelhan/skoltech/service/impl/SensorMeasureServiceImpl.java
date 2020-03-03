@@ -32,10 +32,17 @@ public class SensorMeasureServiceImpl implements SensorMeasureService {
 
     @Transactional
     public SensorMeasureDTO save(SensorMeasureDTO dto) {
+        /*
+            Проверить имеется ли такой объект в базе,
+            если нет то создать новый
+         */
         if (!this.objectService.existsById(dto.getObjectId())) {
             this.objectService.save(new ObjectDTO(dto.getObjectId()));
         }
-
+        /*
+            Проверить имеется ли такой сенсор в базе,
+            если нет то создать новый
+         */
         if (!this.sensorService.existsById(dto.getSensorId())) {
             this.sensorService.save(new SensorDTO(dto.getSensorId(), dto.getObjectId()));
         }

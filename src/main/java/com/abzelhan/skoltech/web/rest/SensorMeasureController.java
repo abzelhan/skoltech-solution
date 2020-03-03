@@ -24,12 +24,24 @@ public class SensorMeasureController {
 
     private final SensorMeasureService measureService;
 
+    /**
+     * Сохранить измерения датчиков
+     * @param dto список измерений датчиков
+     * @return список измерений датчиков с идентификаторами
+     */
     @PostMapping("/save")
     public ResponseEntity<List<SensorMeasureDTO>> save(@RequestBody List<SensorMeasureDTO> dto) {
         log.debug("save, dto: {}", dto);
         return ResponseEntity.ok(this.measureService.save(dto));
     }
 
+    /**
+     * Выгрузить все измерения заданного датчика за заданный интервал времени.
+     * @param sensorId идентификатор датчика
+     * @param from начало периода
+     * @param to конец периода
+     * @return список измерений
+     */
     @GetMapping("/history")
     public ResponseEntity<List<SensorMeasureDTO>> history(@RequestParam(name = "id") Long sensorId,
                                                           @RequestParam(name = "from") Long from,
@@ -42,12 +54,21 @@ public class SensorMeasureController {
         );
     }
 
+    /**
+     * Выгрузить текущие (последние на данных момент) значения всех датчиков для заданного объекта.
+     * @param objectId идентификатор объекта
+     * @return список измерений
+     */
     @GetMapping("/latest")
     public ResponseEntity<List<SensorMeasureDTO>> latest(@RequestParam(name = "id") Long objectId) {
         log.debug("latest, params: {}", objectId);
         return ResponseEntity.ok(this.measureService.findAllByObject(objectId));
     }
 
+    /**
+     * Выгрузить среднее из текущих значений датчиков для каждого объекта.
+     * @return список средних температур в разбивке по объектам.
+     */
     @GetMapping("/avg")
     public ResponseEntity<List<SensorMeasureAverageDTO>> average() {
         log.debug("average");
