@@ -1,5 +1,15 @@
 version: '2'
 services:
+  skoltech-app:
+    image: skoltech-app:latest
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql-skoltech:5432/skoltech
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+    networks:
+      - default
+    ports:
+      - 8080:8080
   postgresql-skoltech:
     image: postgres:10.4
     environment:
@@ -8,3 +18,5 @@ services:
       - POSTGRES_PASSWORD=root
     ports:
       - 5434:5432
+    networks:
+      - default

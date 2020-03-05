@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5434/skoltech
+    url: ${SPRING_DATASOURCE_URL}
     jdbcUrl: ${spring.datasource.url}
-    username: postgres
-    password: root
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
