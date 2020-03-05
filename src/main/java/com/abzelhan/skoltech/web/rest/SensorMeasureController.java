@@ -62,7 +62,7 @@ public class SensorMeasureController {
     @GetMapping("/latest")
     public ResponseEntity<List<SensorMeasureDTO>> latest(@RequestParam(name = "id") Long objectId) {
         log.debug("latest, params: {}", objectId);
-        return ResponseEntity.ok(this.measureService.findAllByObject(objectId));
+        return ResponseEntity.ok(this.measureService.getLatest(objectId));
     }
 
     /**

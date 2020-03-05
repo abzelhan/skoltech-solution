@@ -18,11 +18,17 @@ public interface SensorMeasureRepository extends JpaRepository<SensorMeasure, Lo
                                                         @Param("startDate") LocalDateTime startDate,
                                                         @Param("endDate") LocalDateTime endDate);
 
-    @Query(value = "select * from sensor_measure " +
-            "         inner join sensors s on sensor_measure.sensor_id = s.id " +
-            "         inner join objects o on s.object_id = o.id " +
-            "         where object_id = :objectId",
+    @Query(value = "select sm.* " +
+            "from sensor_measure sm " +
+            "where sm.id = (select s.id " +
+            "               from sensor_measure s " +
+            "                        inner join sensors s2 on s.sensor_id = s2.id " +
+            "                        inner join objects o on s2.object_id = o.id " +
+            "               where s.sensor_id = sm.sensor_id " +
+            "                 and o.id = :objectId " +
+            "               order by s.time desc " +
+            "               limit 1)",
     nativeQuery = true)
-    List<SensorMeasure> findAllByObjectId(@Param("objectId") Long objectId);
+    List<SensorMeasure> getLatest(@Param("objectId") Long objectId);
 
 }

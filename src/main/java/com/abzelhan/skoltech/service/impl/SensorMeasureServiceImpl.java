@@ -62,17 +62,22 @@ public class SensorMeasureServiceImpl implements SensorMeasureService {
         return this.mapper.toDtos(this.repository.findAllBySensorIdAndTimeBetween(sensorId, from, to));
     }
 
-    public List<SensorMeasureDTO> findAllByObject(Long objectId) {
-        return this.mapper.toDtos(this.repository.findAllByObjectId(objectId));
+    public List<SensorMeasureDTO> getLatest(Long objectId) {
+        return this.mapper.toDtos(this.repository.getLatest(objectId));
     }
 
     @Override
     public List<SensorMeasureAverageDTO> getAverages() {
-        String query = "select o.id as objectId, avg(sm.value) as average  " +
-                       "from sensor_measure sm  " +
-                       "         inner join sensors s on sm.sensor_id = s.id  " +
-                       "         inner join objects o on s.object_id = o.id  " +
-                       "group by o.id";
+        String query = "select avg(sm.value) as average, o.id as objectId " +
+                "from sensor_measure sm " +
+                "inner join sensors s2 on sm.sensor_id = s2.id " +
+                "inner join objects o on s2.object_id = o.id " +
+                "where sm.id = (select s.id " +
+                "               from sensor_measure s " +
+                "               where s.sensor_id = sm.sensor_id " +
+                "               order by s.time desc " +
+                "               limit 1) " +
+                "group by o.id";
 
         List<SensorMeasureAverageDTO> averages = jdbcTemplate.query(query,
                 (rs, rowNum) -> new SensorMeasureAverageDTO(

@@ -60,7 +60,6 @@ public class SensorMeasureServiceTests extends CommonTestConfiguration {
         List<SensorMeasureDTO> result = sensorMeasureService.getHistory(1L, NOW, NOW.plusSeconds(2L));
 
         assertFalse(result.isEmpty());
-        assertEquals(2, result.size());
 
         for (SensorMeasureDTO dto : result) {
             assertEquals(Long.valueOf(1L), dto.getSensorId());
@@ -71,13 +70,11 @@ public class SensorMeasureServiceTests extends CommonTestConfiguration {
     @Order(3)
     @Rollback(false)
     @Transactional
-    void testFindAllByObject() {
-        List<SensorMeasureDTO> result = sensorMeasureService.findAllByObject(1L);
+    void testGetLatest() {
+        List<SensorMeasureDTO> result = sensorMeasureService.getLatest(1L);
         assertFalse(result.isEmpty());
-        assertEquals(3, result.size());
-        for (SensorMeasureDTO dto : result) {
-            assertEquals(Long.valueOf(1L), dto.getObjectId());
-        }
+        assertEquals(1, result.size());
+        assertEquals(Double.valueOf(13.0), result.get(0).getValue());
     }
 
     @Test
@@ -91,13 +88,13 @@ public class SensorMeasureServiceTests extends CommonTestConfiguration {
 
         for (SensorMeasureAverageDTO dto : result) {
             if (dto.getObjectId() == 1L) {
-                assertEquals(Double.valueOf(12.0), dto.getAverage());
+                assertEquals(Double.valueOf(13.0), dto.getAverage());
             }
             if (dto.getObjectId() == 2L) {
-                assertEquals(Double.valueOf(15.199999999999998), dto.getAverage());
+                assertEquals(Double.valueOf(16.3), dto.getAverage());
             }
             if (dto.getObjectId() == 3L) {
-                assertEquals(Double.valueOf(18.5), dto.getAverage());
+                assertEquals(Double.valueOf(19.6), dto.getAverage());
             }
         }
 

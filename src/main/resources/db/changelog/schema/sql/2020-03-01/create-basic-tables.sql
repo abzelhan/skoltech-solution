@@ -1,10 +1,10 @@
-CREATE TABLE objects
+CREATE TABLE IF NOT EXISTS objects
 (
     id BIGSERIAL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE sensors
+CREATE TABLE IF NOT EXISTS sensors
 (
     id        BIGSERIAL,
     object_id BIGSERIAL NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE sensors
     FOREIGN KEY (object_id) REFERENCES objects (id)
 );
 
-CREATE TABLE sensor_measure
+CREATE TABLE IF NOT EXISTS  sensor_measure
 (
     id        BIGSERIAL,
     sensor_id BIGSERIAL NOT NULL,
